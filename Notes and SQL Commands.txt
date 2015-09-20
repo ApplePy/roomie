@@ -1,0 +1,19 @@
+Hack reconfiguration notes:
+* DHCP reservation for VM
+* roomiesonline.co DNS record
+* Hack the North 2015 group add
+
+
+Database commands:
+* CREATE DATABASE roomies;
+* USE roomies;
+* CREATE TABLE users(UserToken TEXT NOT NULL, Attributes TEXT NOT NULL, DeclineList TEXT, DeclineListSize INT NOT NULL DEFAULT 0, JoinDate DATE) DEFAULT CHARACTER SET utf8; 
+* DELIMITER $$
+	CREATE TRIGGER AddDate BEFORE INSERT ON users
+		FOR EACH ROW
+		BEGIN
+			SET NEW.JoinDate = CURRENT_DATE;
+		END$$
+* CREATE USER 'roomies'@'localhost' IDENTIFIED BY "htn2015";
+* GRANT ALL ON roomies.* TO 'roomies'@'localhost';
+* NOTES: Check what the user ID length from Facebook is, set UserToken to set size, and then set as primary key
